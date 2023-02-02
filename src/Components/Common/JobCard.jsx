@@ -123,7 +123,7 @@ const JobCard = (props) => {
       {props.candidate && (
         <div className="flex items-center gap-2">
           <Button text="View Profile" outline className="w-full" />
-          <Button text="Send Invite" className="w-full" />
+          {/* <Button text="Send Invite" className="w-full" /> */}
         </div>
       )}
 

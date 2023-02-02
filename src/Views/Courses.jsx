@@ -11,9 +11,11 @@ import { Autoplay, Pagination } from "swiper";
 // Import Swiper styles
 import "swiper/css";
 
+import { useNavigate } from "react-router-dom";
 import Footer from "../Components/Footer";
 
 const Courses = () => {
+  const navigate = useNavigate();
   return (
     <>
       <Header />
@@ -49,6 +51,7 @@ const Courses = () => {
                   <Button
                     bg="bg-[#248489]"
                     className="!text-[white] hover:!text-white hover:!bg-[#248489] border-white"
+                    onClick={() => navigate("/course-detail")}
                     text={
                       <div className="flex items-center gap-2">
                         <h2>View Course</h2>
@@ -75,6 +78,7 @@ const Courses = () => {
                   <Button
                     bg="bg-[#248489]"
                     className="!text-[white] hover:!text-white hover:!bg-[#248489] border-white"
+                    onClick={() => navigate("/course-detail")}
                     text={
                       <div className="flex items-center gap-2">
                         <h2>View Course</h2>
@@ -101,6 +105,7 @@ const Courses = () => {
                   <Button
                     bg="bg-[#248489]"
                     className="!text-[white] hover:!text-white hover:!bg-[#248489] border-white"
+                    onClick={() => navigate("/course-detail")}
                     text={
                       <div className="flex items-center gap-2">
                         <h2>View Course</h2>
@@ -133,24 +138,7 @@ const Courses = () => {
           />
         </div>
       </div>
-      <div className="container py-[3rem]">
-        <h1 className="text-3xl font-extrabold">Trending Courses</h1>
-        <div className="grid 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 py-[3rem]">
-          {/* <HomeCard trending={true} /> */}
-        </div>
-        <div className="text-center">
-          <Button
-            bg="bg-[#248489]"
-            className="!text-[white] hover:!text-white hover:!bg-[#248489] border-white"
-            text={
-              <div className="flex items-center gap-2">
-                <h2>View All</h2>
-                <Svgs.Next fill="#fff" />
-              </div>
-            }
-          />
-        </div>
-      </div>
+
       <div className="container">
         <div className="bg-[#35424b] p-3 min-h-[16rem] bg-started started-bg bg-no-repeat">
           <div className="flex gap-6 justify-between flex-wrap h-full relative z-[2]">
