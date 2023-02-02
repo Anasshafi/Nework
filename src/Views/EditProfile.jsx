@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import swr from "swr";
 import Button from "../Components/Common/Button";
 import Dropwdown from "../Components/Common/Dropdown";
 import FormDescription from "../Components/Common/FormDescription";
@@ -13,28 +14,32 @@ import UseUser from "../hooks/UseUser";
 const EditProfile = () => {
   const navigate = useNavigate();
   const [editTypeTech, setEditTypeTech] = useState(false);
+  const userId = JSON.parse(localStorage.getItem("user"))?._id;
+  const { getUserProfile, updateUserProfile } = UseUser();
+
+  const { data } = swr("get-profile", async () => await getUserProfile(userId));
 
   const [profile, setProfile] = useState({
-    firstName: "",
-    lastName: "",
-    username: "",
-    location: "",
-    placeholder: "",
-    about: "",
-    skills: [],
-    github: "",
-    facebook: "",
-    twitter: "",
-    instagram: "",
-    linkedin: "",
-    other: "",
+    firstName: data.firstName || "",
+    lastName: data.lastName || "",
+    username: data.username || "",
+    location: data.location || "",
+    placeholder: data.placeholder || "",
+    about: data.about || "",
+    skills: data.skills || [],
+    github: data.github || "",
+    facebook: data.facebook || "",
+    twitter: data.twitter || "",
+    instagram: data.instagram || "",
+    linkedin: data.linkedin || "",
+    other: data.other || "",
   });
 
   const handleChange = (e) => {
     setProfile({ ...profile, [e.target.name]: e.target.value });
   };
 
-  const { updateUserProfile } = UseUser();
+  console.log("profile data = ", data);
   const handleSaveProfile = async () => {
     await updateUserProfile(profile).then(() => navigate("/profile"));
   };

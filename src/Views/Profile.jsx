@@ -3,9 +3,11 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import swr from "swr";
 import Button from "../Components/Common/Button";
+import HomeCard from "../Components/Common/HomeCard";
 import Footer from "../Components/Footer";
 import Header from "../Components/Header";
 import Svgs from "../Components/Svgs";
+import UsePortfolio from "../hooks/UsePortfolio";
 import UseUser from "../hooks/UseUser";
 
 const Profile = () => {
@@ -13,9 +15,15 @@ const Profile = () => {
   const [HomeSection, setHomeSection] = useState("All");
   const navigate = useNavigate();
   const { getUserProfile } = UseUser();
-  const userId = JSON.parse(localStorage.getItem("user"))?.id;
+  const { getAllPortfolios } = UsePortfolio();
+  const userId = JSON.parse(localStorage.getItem("user"))?._id;
   const { data } = swr("get-profile", async () => await getUserProfile(userId));
-  console.log("profile data = ", data);
+  const { data: portfolios } = swr(
+    "get-portfolios",
+    async () => await getAllPortfolios(userId)
+  );
+
+  console.log(portfolios.portfolios);
 
   return data ? (
     <>
@@ -38,7 +46,7 @@ const Profile = () => {
           </div>
           <div className="pt-[4rem]">
             <div className="flex items-center justify-end gap-3">
-              <Button text="Invite Me" />
+              {!userId && <Button text="Invite Me" />}
               {/* <Button text='Follow' outline /> */}
               <div
                 onClick={() => {
@@ -153,21 +161,23 @@ const Profile = () => {
                   Wordpress Projects
                 </p>
               </div>
-              {/* {
-                                HomeSection === 'All' && <div className='relative slide-in-bottom grid 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 py-[3rem]'>
-                                    <HomeCard />
-                                </div>
-                            }
-                            {
-                                HomeSection === 'Mobile' && <div className='relative slide-in-bottom grid 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 py-[3rem]'>
-                                    <HomeCard />
-                                </div>
-                            }
-                            {
-                                HomeSection === 'Website' && <div className='relative slide-in-bottom grid 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 py-[3rem]'>
-                                    <HomeCard />
-                                </div>
-                            } */}
+              {HomeSection === "All" && (
+                <div className="relative slide-in-bottom grid 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 py-[3rem]">
+                  {portfolios?.portfolios?.map((p, idx) => (
+                    <HomeCard key={idx} job={p} />
+                  ))}
+                </div>
+              )}
+              {HomeSection === "Mobile" && (
+                <div className="relative slide-in-bottom grid 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 py-[3rem]">
+                  {/* <HomeCard /> */}
+                </div>
+              )}
+              {HomeSection === "Website" && (
+                <div className="relative slide-in-bottom grid 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 py-[3rem]">
+                  {/* <HomeCard /> */}
+                </div>
+              )}
               {HomeSection === "Wordpress" && (
                 <div className="">
                   <div className="mx-auto w-fit py-[2rem]">
