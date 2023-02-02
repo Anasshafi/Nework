@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+/* eslint-disable array-callback-return */
+import React, { useMemo, useState } from "react";
 import swr from "swr";
 import UseJob from "../hooks/UseJob";
 import Button from "./Common/Button";
@@ -8,10 +9,28 @@ import Footer from "./Footer";
 import Header from "./Header";
 import Svgs from "./Svgs";
 const Discover = () => {
-  const { getJobs } = UseJob();
   const [HomeSection, setHomeSection] = useState("All");
+  const { getJobs } = UseJob();
   const { data } = swr("get-jobs", async () => await getJobs());
   const jobPostings = data?.jobPostings;
+  const [search, setSearch] = useState("");
+
+  const renderJobCard = useMemo(() => {
+    const d = jobPostings?.filter((job) => {
+      if (search === "") {
+        return job;
+      } else if (
+        job.title.toLowerCase().includes(search.toLowerCase()) ||
+        job.description.toLowerCase().includes(search.toLowerCase())
+      ) {
+        return job;
+      }
+    });
+    return d?.map((job) => {
+      return <HomeCard key={job.id} job={job} />;
+    });
+  }, [jobPostings, search]);
+
   return (
     <>
       <Header />
@@ -31,6 +50,8 @@ const Discover = () => {
                 </div>
                 <div className="w-full">
                   <input
+                    onChange={(e) => setSearch(e.target.value)}
+                    value={search}
                     type="text"
                     className="text-[#35424B] outline-none p-3 rounded-md border-transparent border focus:border-gray-200 w-full"
                     placeholder="Search Portfolio by tool, category & Title"
@@ -102,30 +123,22 @@ const Discover = () => {
           </div>
           {HomeSection === "All" && (
             <div className="slide-in-bottom grid 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 py-[3rem]">
-              {jobPostings?.map((job, idx) => (
-                <HomeCard job={job} key={idx} />
-              ))}
+              {renderJobCard}
             </div>
           )}
           {HomeSection === "Mobile" && (
             <div className="slide-in-bottom grid 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 py-[3rem]">
-              {jobPostings?.map((job, idx) => (
-                <HomeCard job={job} key={idx} />
-              ))}
+              {renderJobCard}
             </div>
           )}
           {HomeSection === "Website" && (
             <div className="slide-in-bottom grid 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 py-[3rem]">
-              {jobPostings?.map((job, idx) => (
-                <HomeCard job={job} key={idx} />
-              ))}
+              {renderJobCard}
             </div>
           )}
           {HomeSection === "Wordpress" && (
             <div className="slide-in-bottom grid 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 py-[3rem]">
-              {jobPostings?.map((job, idx) => (
-                <HomeCard job={job} key={idx} />
-              ))}
+              {renderJobCard}
             </div>
           )}
           <div className="flex items-center justify-center">

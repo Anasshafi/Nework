@@ -1,10 +1,10 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Svgs from "../Svgs";
 
 const HomeCard = (props) => {
   const navigate = useNavigate();
-  console.log("props = ", props);
   return (
     <div
       onClick={() => {
@@ -54,11 +54,6 @@ const HomeCard = (props) => {
             />
             <h2 className="font-bold text-[#35424B]">Anas Shafi</h2>
           </div>
-          {props.trending ? (
-            ""
-          ) : (
-            <p className="text-[#ADADAD] text-sm">6 Days Ago</p>
-          )}
         </div>
         <h1>{props.job.title}</h1>
         {props.trending ? (
