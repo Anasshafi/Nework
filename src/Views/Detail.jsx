@@ -3,11 +3,13 @@ import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
+import { useParams } from "react-router-dom";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
 
+import swr from "swr";
 // import required modules
 import { FreeMode, Navigation, Thumbs } from "swiper";
 
@@ -17,11 +19,16 @@ import CircleIcon from "../Components/Common/CircleIcon";
 import Footer from "../Components/Footer";
 import Header from "../Components/Header";
 import Svgs from "../Components/Svgs";
+import UseJob from "../hooks/UseJob";
 
-const Detail = () => {
+const Detail = (props) => {
+  let { id } = useParams();
+
   const [thumbsSwiper, setThumbsSwiper] = useState();
   const navigate = useNavigate();
-
+  const { getJob } = UseJob();
+  const { data } = swr("get-job-" + id, async () => await getJob(id));
+  console.log("data = ", data);
   return (
     <>
       <Header />
@@ -80,7 +87,7 @@ const Detail = () => {
           <div className="flex flex-col gap-4">
             <div className="flex items-center justify-between gap-[2rem]">
               <h1 className="font-semibold text-3xl">
-                Pet Care App in Flutter
+                {data?.title || "Loading..."}
               </h1>
               <div className="flex items-center gap-3">
                 <CircleIcon>
@@ -104,28 +111,25 @@ const Detail = () => {
             <div className="flex flex-col gap-3">
               <h1 className="font-semibold text-black text-xl">Description</h1>
               <p className="text-[#5D5D5D] text-sm">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum
-                quam velit vero, nobis laboriosam nostrum ex id magnam non
-                veniam cumque molestias suscipit vitae tenetur, aspernatur rem,
-                hic eos. Vel possimus, placeat, accusantium suscipit atque
-                adipisci modi voluptatem explicabo, odio soluta accusamus.
-                Molestiae, veritatis ipsa. Excepturi voluptatum laboriosam odio
-                aliquid quaerat doloremque quae aperiam vel. Saepe dignissimos
-                deleniti sint ipsum consectetur officia reprehenderit ullam
-                nobis soluta maxime, debitis eveniet minus odit unde aperiam ad
-                dolorum earum ducimus velit quia molestiae alias. Debitis
-                inventore consectetur quaerat recusandae fugiat enim dolor?
-                Vitae tempora, tempore iure laudantium repudiandae vel quis
-                assumenda hic pariatur! Illum sint dolorem praesentium vero
-                voluptatibus eos ex fugiat eaque molestiae vitae?
+                {data?.description || "Loading..."}
               </p>
             </div>
             <div className="flex flex-col gap-3">
               <h1 className="font-semibold text-black text-xl">Technologies</h1>
               <div className="flex items-center gap-2">
-                <Button text="Flutter" disabled className="rounded-full" />
+                {data &&
+                  data?.skills &&
+                  data?.skills.map((tech, index) => (
+                    <Button
+                      text={tech}
+                      disabled
+                      className="rounded-full"
+                      key={index}
+                    />
+                  ))}
+                {/* <Button text="Flutter" disabled className="rounded-full" />
                 <Button text="ReactJs" disabled className="rounded-full" />
-                <Button text="NodeJs" disabled className="rounded-full" />
+                <Button text="NodeJs" disabled className="rounded-full" /> */}
               </div>
             </div>
           </div>

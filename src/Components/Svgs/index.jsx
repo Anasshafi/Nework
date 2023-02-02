@@ -2,6 +2,7 @@
 const Github = (props) => {
   return (
     <svg
+      {...props}
       width={`${props.size ? props.size : "37"}`}
       height={`${props.size ? props.size : "37"}`}
       viewBox="0 0 37 36"
@@ -55,6 +56,7 @@ const Share = (props) => {
 const Linkedin = (props) => {
   return (
     <svg
+      {...props}
       width="37"
       height="36"
       viewBox="0 0 37 36"
@@ -72,6 +74,7 @@ const Linkedin = (props) => {
 const FaceBook = (props) => {
   return (
     <svg
+      {...props}
       width="35"
       height="36"
       viewBox="0 0 35 36"
@@ -90,6 +93,7 @@ const FaceBook = (props) => {
 const Twitter = (props) => {
   return (
     <svg
+      {...props}
       width="38"
       height="38"
       viewBox="0 0 38 38"

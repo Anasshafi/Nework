@@ -13,17 +13,12 @@ const Header = (props) => {
   const { pathname } = location;
   const splitLocation = pathname.split("/");
 
-  //   const user =
-  //     typeof window !== "undefined" && JSON.parse(localStorage.getItem("user"));
-
   const [user, setUser] = useState();
-
   useEffect(() => {
     if (typeof window !== "undefined") {
       setUser(JSON.parse(localStorage.getItem("user")));
     }
   }, []);
-  console.log(user);
   return (
     <div className="w-full sticky top-0 bg-white z-[100] shadow-md">
       <div className="container py-[1.5rem]">
@@ -94,7 +89,7 @@ const Header = (props) => {
             >
               <Svgs.HamburgerMenu />
             </div>
-            {props.login ? (
+            {user ? (
               <div className="flex items-center gap-2 relative">
                 <img
                   onClick={() => {
@@ -171,6 +166,7 @@ const Header = (props) => {
                           className="flex items-center gap-3 py-2 hover-dropdown"
                           onClick={() => {
                             navigate("/login");
+                            localStorage.removeItem("user");
                           }}
                         >
                           <Svgs.Logout />
@@ -188,7 +184,7 @@ const Header = (props) => {
                   navigate("/login");
                 }}
               >
-                {user ? user.firstName : "Login"}
+                {"Login"}
               </button>
             )}
             <div

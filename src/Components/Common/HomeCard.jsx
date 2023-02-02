@@ -10,7 +10,7 @@ const HomeCard = (props) => {
       onClick={() => {
         props.trending
           ? navigate("/course-detail")
-          : navigate("/detail?id=" + props.job.id);
+          : navigate("/detail/" + props.job._id);
       }}
       className={`${
         props.trending ? "p-[0.6rem]" : ""

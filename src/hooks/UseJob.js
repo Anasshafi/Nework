@@ -20,7 +20,16 @@ const UseJob = () => {
     }
   };
 
-  return { createJob, getJobs };
+  const getJob = async (id) => {
+    try {
+      const { data } = await GET("job-posting/" + id);
+      return data;
+    } catch (error) {
+      console.log({ error });
+    }
+  };
+
+  return { createJob, getJobs, getJob };
 };
 
 export default UseJob;
