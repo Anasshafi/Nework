@@ -1,12 +1,23 @@
-import React, { useState } from 'react'
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import React from "react";
 
-const FormDescription = ({ title, placeholder }) => {
-    return (
-        <div className='flex flex-col gap-2'>
-            <h1 className='font-semibold'>{title}</h1>
-            <CKEditor
+const FormDescription = ({ title, placeholder, value, onChange, name }) => {
+  return (
+    <div className="flex flex-col gap-2">
+      <h1 className="font-semibold">{title}</h1>
+      <textarea
+        onChange={onChange}
+        name={name}
+        value={value}
+        placeholder={placeholder}
+        style={{
+          border: "1px solid #E5E5E5",
+          padding: "1rem",
+          borderRadius: "0.2rem",
+        }}
+        rows="6"
+      />
+
+      {/* <CKEditor
                 editor={ClassicEditor}
                 data={`<p
                      className='text-[#555555]'>${placeholder ? placeholder : 'Enter Description'}</p>`}
@@ -24,9 +35,9 @@ const FormDescription = ({ title, placeholder }) => {
                 onFocus={(event, editor) => {
                     console.log('Focus.', editor);
                 }}
-            />
-        </div>
-    )
-}
+            /> */}
+    </div>
+  );
+};
 
-export default FormDescription  
+export default FormDescription;
