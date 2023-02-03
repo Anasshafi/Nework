@@ -36,7 +36,7 @@ const RoutesList = () => {
         <Route path="/detail/:id" element={<Detail />} />
         <Route path="/find-work" element={<FindWork />} />
         <Route path="/hire-developers" element={<HireDevelopers />} />
-        <Route path="/job-detail" element={<JobDetail />} />
+        <Route path="/job-detail/:id" element={<JobDetail />} />
         <Route path="/create-job" element={<CreateJob />} />
         <Route path="/upload-portfolio" element={<UploadPortfolio />} />
         <Route path="/community" element={<Community />} />

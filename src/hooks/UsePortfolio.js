@@ -19,7 +19,17 @@ const UsePortfolio = () => {
       console.log({ error });
     }
   };
-  return { addPortfolio, getAllPortfolios };
+
+  const getPortfolio = async (id) => {
+    try {
+      const { data } = await GET("portfolio/" + id);
+      return data;
+    } catch (error) {
+      console.log({ error });
+    }
+  };
+
+  return { addPortfolio, getAllPortfolios, getPortfolio };
 };
 
 export default UsePortfolio;

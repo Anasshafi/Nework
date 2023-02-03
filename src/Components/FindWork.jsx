@@ -36,6 +36,7 @@ const FindWork = () => {
           title={job.title}
           desc="Posted By Anas Shafi"
           description={job.description}
+          id={job._id}
           projects={[
             job.requiredExperience,
             job.type,
@@ -95,7 +96,7 @@ const FindWork = () => {
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-5 justify-between flex-wrap">
+        {/* <div className="flex items-center gap-5 justify-between flex-wrap">
           <div>
             <h1 className="font-semibold text-2xl">
               {renderJobCard?.length || 0} Jobs Found
@@ -145,10 +146,10 @@ const FindWork = () => {
               />
             </div>
           </div>
-        </div>
+        </div> */}
         <div className="grid 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 pb-[1rem]">
           {Active === "full" && renderJobCard}
-          {Active === "part" && (
+          {/* {Active === "part" && (
             <>
               <JobCard
                 title="We Need Senior Anroid Developer"
@@ -180,7 +181,7 @@ const FindWork = () => {
                 projects={projects}
               />
             </>
-          )}
+          )} */}
         </div>
         <div className="flex items-center justify-center mb-[2rem]">
           <Button

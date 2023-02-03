@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-pascal-case */
+/* eslint-disable jsx-a11y/alt-text */
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Svgs from "../Svgs";
@@ -6,11 +8,12 @@ import ProfileStack from "./ProfileStack";
 
 const JobCard = (props) => {
   const navigate = useNavigate();
+
   return (
     <div
       className="border p-3 rounded-md shadow-md flex flex-col gap-4 cursor-pointer"
       onClick={() => {
-        navigate("/job-detail");
+        navigate("/job-detail/" + props.id);
       }}
     >
       <div className="flex items-center gap-3 cursor-pointer">

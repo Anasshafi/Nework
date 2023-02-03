@@ -23,8 +23,6 @@ const Profile = () => {
     async () => await getAllPortfolios(userId)
   );
 
-  console.log(portfolios.portfolios);
-
   return data ? (
     <>
       <Header />
