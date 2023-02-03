@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_ENDPOINT = "http://localhost:3300/api";
+export const API_ENDPOINT = "http://localhost:3300/api";
 const useAPI = () => {
   const token = JSON.parse(localStorage.getItem("user"))?.token;
   console.log("--- ", JSON.parse(localStorage.getItem("user")));

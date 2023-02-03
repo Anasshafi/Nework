@@ -1,16 +1,16 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import Svgs from "../Svgs";
 
 const HomeCard = (props) => {
   const navigate = useNavigate();
+  const url = props.type
+    ? `/detail/${props.job._id}?type=${props.type}`
+    : `/detail/${props.job._id}`;
   return (
     <div
       onClick={() => {
-        props.trending
-          ? navigate("/course-detail")
-          : navigate("/detail/" + props.job._id);
+        props.trending ? navigate("/course-detail") : navigate(url);
       }}
       className={`${
         props.trending ? "p-[0.6rem]" : ""
@@ -19,8 +19,8 @@ const HomeCard = (props) => {
       <div className="relative">
         <img
           src={
-            props.img
-              ? `${process.env.PUBLIC_URL}${props.img}`
+            props.job.attachments?.length > 0
+              ? `http://127.0.0.1:3300${props.job.attachments[0] || ""}`
               : "https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"
           }
           className={`rounded-t-lg h-[15rem] w-full object-cover object-top`}

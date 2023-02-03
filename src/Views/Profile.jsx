@@ -162,7 +162,7 @@ const Profile = () => {
               {HomeSection === "All" && (
                 <div className="relative slide-in-bottom grid 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 py-[3rem]">
                   {portfolios?.portfolios?.map((p, idx) => (
-                    <HomeCard key={idx} job={p} />
+                    <HomeCard type="portfolio" key={idx} job={p} />
                   ))}
                 </div>
               )}

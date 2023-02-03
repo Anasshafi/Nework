@@ -138,7 +138,6 @@ const Header = (props) => {
                             <h2 className="text-sm font-semibold">
                               Limited Account
                             </h2>
-                            <p className="text-xs underline">Verify Now</p>
                           </div>
                         </div>
                       </div>
@@ -237,7 +236,7 @@ const Header = (props) => {
                         <Svgs.Learning />
                         <p>Ask Question</p>
                       </div>
-                      <div
+                      {/* <div
                         className="flex items-center gap-3 py-2 hover-dropdown"
                         onClick={() => {
                           navigate("/ask-question");
@@ -245,7 +244,7 @@ const Header = (props) => {
                       >
                         <Svgs.Logout />
                         <p>Logout</p>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </>

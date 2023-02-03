@@ -20,14 +20,24 @@ import Footer from "../Components/Footer";
 import Header from "../Components/Header";
 import Svgs from "../Components/Svgs";
 import UseJob from "../hooks/UseJob";
+import UsePortfolio from "../hooks/UsePortfolio";
 
 const Detail = (props) => {
   let { id } = useParams();
-
+  const type = window.location.search.substring(1).split("=")[1];
+  //   const type = query.get("type");
+  const { getPortfolio } = UsePortfolio();
+  console.log("type = ", type);
   const [thumbsSwiper, setThumbsSwiper] = useState();
   const navigate = useNavigate();
   const { getJob } = UseJob();
-  const { data } = swr("get-job-" + id, async () => await getJob(id));
+  const { data } = swr("get-job-" + id, async () => {
+    if (type === "portfolio") {
+      return await getPortfolio(id);
+    } else {
+      return await getJob(id);
+    }
+  });
   console.log("data = ", data);
   return (
     <>
@@ -44,16 +54,15 @@ const Detail = (props) => {
             >
               <SwiperSlide>
                 <img
-                  src="https://swiperjs.com/demos/images/nature-1.jpg"
+                  src={
+                    data?.attachments?.length > 0
+                      ? "http://127.0.0.1:3300" + data?.attachments[0]
+                      : "https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"
+                  }
                   className="h-full w-full object-cover"
                 />
               </SwiperSlide>
-              <SwiperSlide>
-                <img
-                  src="https://swiperjs.com/demos/images/nature-2.jpg"
-                  className="h-full w-full object-cover"
-                />
-              </SwiperSlide>
+
               <div className="absolute top-3 left-3 z-10">
                 <CircleIcon>
                   <Svgs.Github size="25" />
@@ -67,24 +76,8 @@ const Detail = (props) => {
                                 </div> */}
               </div>
             </Swiper>
-            <Swiper
-              onSwiper={setThumbsSwiper}
-              spaceBetween={10}
-              slidesPerView={"auto"}
-              freeMode={true}
-              watchSlidesProgress={true}
-              modules={[FreeMode, Navigation, Thumbs]}
-              className="detail-swiper-thumb"
-            >
-              <SwiperSlide>
-                <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
-              </SwiperSlide>
-              <SwiperSlide>
-                <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
-              </SwiperSlide>
-            </Swiper>
           </div>
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 ">
             <div className="flex items-center justify-between gap-[2rem]">
               <h1 className="font-semibold text-3xl">
                 {data?.title || "Loading..."}
@@ -135,7 +128,10 @@ const Detail = (props) => {
           </div>
         </div>
 
-        <div className="bg-[#35424b] !h-fit !py-[1.2rem] rounded-md bg-started after:w-[24rem] after:h-[20rem]">
+        <div
+          style={{ marginTop: "50px" }}
+          className="bg-[#35424b] !h-fit !py-[1.2rem] rounded-md bg-started after:w-[24rem] after:h-[20rem]"
+        >
           <div className="flex gap-6 justify-between h-full relative z-[2]">
             <div className="flex items-center gap-4 pl-[3rem]">
               <div>

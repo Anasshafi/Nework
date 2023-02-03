@@ -17,6 +17,7 @@ const UploadPortfolio = () => {
     technologies: "",
     link: "",
     githubLink: "",
+    attachments: [],
   });
   const navigate = useNavigate();
 
@@ -104,7 +105,11 @@ const UploadPortfolio = () => {
               placeholder="Enter Github Link"
             />
           </div>
-          <FormUploadMedia />
+          <FormUploadMedia
+            onUploaded={(url) =>
+              setPortfolio({ ...portfolio, attachments: [url] })
+            }
+          />
           {/* <FormInput title='Tags' placeholder='Enter atleast 3 Tags' /> */}
 
           <Button
